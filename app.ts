@@ -2,10 +2,18 @@ const num1Element = document.getElementById("num1") as HTMLInputElement;
 const num2Element = document.getElementById("num2") as HTMLInputElement;
 const buttonElement = document.querySelector("button")!;
 
-const numResults: number[] = [];
+const numResults: Array<number> = []; // generic array notation
 const textResults: string[] = [];
 
-function add(num1: number | string, num2: number | string) {
+type NumOrString = number | string;
+type result = {val: number; timestamp: Date};
+
+interface person {
+    name: string,
+    age: number,
+};
+
+function add(num1: NumOrString, num2: NumOrString) {
   if (typeof num1 === "number" && typeof num2 === "number") {
     return num1 + num2;
   } else if (typeof num1 === "string" && typeof num2 === "string") {
@@ -13,7 +21,7 @@ function add(num1: number | string, num2: number | string) {
   }
 }
 
-function printResult(obj: {val: number; timestamp: Date}) {
+function printResult(obj: result) {
     console.log(obj.val);
 }
 
@@ -29,3 +37,11 @@ buttonElement.addEventListener("click", () => {
   printResult({val: result as number, timestamp: new Date()});
   console.log(numResults, textResults);
 });
+
+const myPromise = new Promise<string>((resolve, reject) => { // promise generic type defined
+    setTimeout(() => {
+        resolve('Promise resolved');
+    }, 1000);
+}) 
+
+myPromise.then((result => console.log(result.split(' '))));
